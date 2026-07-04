@@ -8,3 +8,7 @@ Now Silica 5.0 released (Miniscape)
 NoEscape was written in C/C++ but Miniscape is C# so you need atleast .NET 4 or higher to run (!!Use Offline Installer if Windows XP SP3!!)
 
 I cant explain that much here, Try it out yourself.
+
+
+Update 05.07.2026
+If you have defender in your windows you cannot run this program even you already turned off the protection, im investigating this issue soon
