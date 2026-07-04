@@ -16,6 +16,7 @@ So many new payload here, 3 Stages GDI, 2 MBR payload
 for the ideas and inspirations.
 
 
+
 **IM NOT RESPONSIBLE FOR ANY DAMAGES IN YOUR HARDWARE, PLEASE RUN IT INSIDE A VM OR ANY TEST MACHINES**
 NoEscape was written in C/C++ but Miniscape is C# so you need atleast .NET 4 or higher to run (!!Use Offline Installer if Windows XP SP3!!)
 
