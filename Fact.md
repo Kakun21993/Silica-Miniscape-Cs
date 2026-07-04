@@ -1,5 +1,5 @@
 if you were asking me wheres Silica 2.0, 3.0, 4.0 or do i just skipped it. No im not skipping Silica.exe version
-I've code for weeks trial and error to make Miniscape, this program intended to work Windows XP SP3 x86 to Windows 11 21H2 (???)
+I've code for weeks trial and error to make Miniscape, this program intended to work Windows XP SP3 x86 to Windows 10 22H2
 **Work best at Windows 10 MBR Configuration!!**
 
 Theres secret payload if you run it on Windows XP-Windows 8.1
