@@ -1,7 +1,7 @@
 **Miniscape - Silica Rewritten**
 MINI VERSION OF NO ESCAPE
 
-**Please note that secret payloads in this program doesnt need specific dates or times to played, MBR payloads determined by your PC specs even though you're on a VM**
+**Please note that secret payloads in this program Doesn't need specific dates or times to played**
 
 Now Silica 5.0 released (Miniscape),
 if you were asking me wheres Silica 2.0, 3.0, 4.0 or do i just skipped it. No im not skipping Silica.exe version
