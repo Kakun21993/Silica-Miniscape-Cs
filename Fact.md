@@ -4,7 +4,8 @@ I've code for weeks trial and error to make Miniscape, this program intended to 
 
 Theres secret payload if you run it on Windows XP-Windows 8.1
 
-Starting Windows 11 22H2, WMIC is removed via the Windows Update, also starting Windows 24H2 UCPD.sys is introduced that prevents any users from changing Registry while Miniscape/Silica 5.0.exe needs to change the registry to work.
+Starting Windows 11 22H2, WMIC is removed via the Windows Update, also starting Windows 24H2 UCPD.sys is introduced that prevents any users from changing Registry. while Miniscape/Silica 5.0.exe needs to change the registry to work i do not recommend windows 11.
+
 So many new payload here, 3 Stages GDI, 2 MBR payload
 
 ## Thanks for: Enderman(NoEscape.exe), Wipet(Monoxide.exe), Clutter(Mandela.exe, ver-1.0.exe, Cluttscape), Flytech(000.exe)
