@@ -12,3 +12,4 @@ So many new payload here, 3 Stages GDI, 2 MBR payload
 
 
 this really maxed out my Cs knowledge, ive never expect that windows had feature that lets you bypass the normal shutdown, microsoft never documented this and hide it inside ntdll.dll
+My theories are this file is used in reboot between setting up device before oobe launches
