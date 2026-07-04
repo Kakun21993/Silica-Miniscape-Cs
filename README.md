@@ -12,8 +12,7 @@ Theres secret payload if you run it on Windows XP-Windows 8.1
 Starting Windows 11 22H2, WMIC is removed because it's deprecrated, also starting Windows 24H2 UCPD.sys exist that prevent any users from changing Registry while Miniscape/Silica 5.0.exe needs to change the registry to work.
 So many new payload here, 3 Stages GDI, 2 MBR payload
 
-Thanks for:
-Enderman(NoEscape.exe), Wipet(Monoxide.exe), Clutter(Mandela.exe, ver-1.0.exe, Cluttscape), Flytech(000.exe)
+## Thanks for: Enderman(NoEscape.exe), Wipet(Monoxide.exe), Clutter(Mandela.exe, ver-1.0.exe, Cluttscape), Flytech(000.exe)
 for the ideas and inspirations.
 
 
