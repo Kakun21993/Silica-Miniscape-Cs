@@ -8,4 +8,7 @@ Starting Windows 11 22H2, WMIC is removed via the Windows Update, also starting 
 So many new payload here, 3 Stages GDI, 2 MBR payload
 
 ## Thanks for: Enderman(NoEscape.exe), Wipet(Monoxide.exe), Clutter(Mandela.exe, ver-1.0.exe, Cluttscape), Flytech(000.exe)
-for the ideas and inspirations.
+**for the ideas and inspirations.**
+
+
+this really maxed out my Cs knowledge, ive never expect that windows had feature that lets you bypass the normal shutdown, microsoft never documented this and hide it inside ntdll.dll
