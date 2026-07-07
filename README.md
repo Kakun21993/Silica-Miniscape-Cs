@@ -10,5 +10,3 @@ NoEscape was written in C/C++ but Miniscape is C# so you need atleast .NET 4 or 
 I cant explain that much here, Try it out yourself.
 
 
-Update 05.07.2026
-If you have defender in your windows you cannot run this program even you already turned off the protection, im investigating this issue soon
