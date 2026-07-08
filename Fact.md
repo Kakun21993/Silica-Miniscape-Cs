@@ -16,5 +16,7 @@ this really maxed out my Cs knowledge, ive never expect that windows had feature
 My theories are this file is used in reboot between setting up device before oobe launches
 
 so the easter egg is not a random number, in cybersecurity those numbers are:
-426 references to https upgrade required
-1150  references to ERROR_OLD_WIN_VERSION
+
+426 references to HTTPS ERROR which said upgrade required
+
+1150  references to application error which means:ERROR_OLD_WIN_VERSION
