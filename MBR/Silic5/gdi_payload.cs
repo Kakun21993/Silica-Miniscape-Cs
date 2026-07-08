@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -115,69 +116,84 @@ namespace Silic5
         }
         public void gdi_old()
         {
+            Stopwatch sw = Stopwatch.StartNew();
+            int stage = 1;
             Random rnd = new Random();
+            int w = Screen.PrimaryScreen.Bounds.Width;
+            int h = Screen.PrimaryScreen.Bounds.Height;
+            BLENDFUNCTION bf = new BLENDFUNCTION
+            {
+                BlendOp = 0,
+                BlendFlags = 0,
+                SourceConstantAlpha = 35,
+                AlphaFormat = 0
+            };
 
             while (true)
             {
-                IntPtr hdc = GetDC(IntPtr.Zero);
+                if (stage == 1)
+                {
+                    IntPtr hdc = GetDC(IntPtr.Zero);
+                    IntPtr mhdc = CreateCompatibleDC(hdc);
+                    IntPtr hbit = CreateCompatibleBitmap(hdc, w, h);
+                    IntPtr holdbit = SelectObject(mhdc, hbit);
+                    Graphics gfx = Graphics.FromHdc(mhdc);
+                    double t = Environment.TickCount * 9999.99;
+                    PatBlt(hdc, rnd.Next(w), rnd.Next(h), rnd.Next(50, 300), rnd.Next(50, 300), TernaryRasterOperations.PATPAINT);
+                    BitBlt(hdc, 3, 0, w, h, hdc, 0, 0, TernaryRasterOperations.SRCINVERT);
+                    BitBlt(hdc, -3, 0, w, h, hdc, 0, 0, TernaryRasterOperations.MERGECOPY);
+                    BitBlt(hdc, 0, 3, w, h, hdc, 0, 0, TernaryRasterOperations.SRCPAINT);
+                    bf.SourceConstantAlpha = 15;
+                    BitBlt(mhdc, 0, 0, w, h, hdc, 0, 0, TernaryRasterOperations.SRCCOPY);
+                    AlphaBlend(hdc, 2, 2, w, h, mhdc, 0, 0, w, h, bf);
+                    StretchBlt(hdc, rnd.Next(-50, 50), rnd.Next(-50, 50), w + rnd.Next(-100, 100), h + rnd.Next(-100, 100), hdc, 0, 0, w, h, TernaryRasterOperations.SRCCOPY);
+                    int y = rnd.Next(h);
+                    int hh = rnd.Next(10, 80);
+                    StretchBlt(hdc, 0, y, w, hh, hdc, w, y, -w, hh, TernaryRasterOperations.SRCCOPY);
+                    POINT[] pts = { new POINT { X = (int)(Math.Sin(t) * 40), Y = (int)(Math.Cos(t) * 20) }, new POINT { X = w + (int)(Math.Sin(t + 2) * 40), Y = (int)(Math.Sin(t) * 20) }, new POINT { X = (int)(Math.Cos(t + 1) * 40), Y = h + (int)(Math.Sin(t + 3) * 20) } };
+                    int red = (int)(128 + 127 * Math.Sin(t));
+                    int green = (int)(128 + 127 * Math.Sin(t + 2.094));
+                    int blue = (int)(128 + 127 * Math.Sin(t + 4.188));
+                    PlgBlt(hdc, pts, hdc, 0, 0, w, h, IntPtr.Zero, 0, 0);
+                    gfx.Clear(Color.FromArgb(red, green, blue));
+                    AlphaBlend(hdc, 0, 0, w, h, mhdc, 0, 0, w, h, bf);
+                    if (sw.ElapsedMilliseconds >= 25000)
+                    {
+                        ReleaseDC(IntPtr.Zero, hdc);
+                        DeleteDC(mhdc);
+                        stage = 2;
+                        sw.Restart();
+                    }
+                }
+                else if (stage == 2)
+                {
+                    IntPtr hdc = GetDC(IntPtr.Zero);
+                    IntPtr mhdc = CreateCompatibleDC(hdc);
+                    IntPtr hbit = CreateCompatibleBitmap(hdc, w, h);
+                    IntPtr holdbit = SelectObject(mhdc, hbit);
+                    Graphics gfx = Graphics.FromHdc(mhdc);
+                    double t = Environment.TickCount * 9999.99;
+                    for (int y = 0; y < h; y += 2)
+                    {
+                        int dx = (int)(Math.Sin(t + y * 0.09) * 60 + Math.Cos(t * 0.7 + y * 0.02) * 30);
+                        BitBlt(hdc, dx, y, w, 2, hdc, 0, y, TernaryRasterOperations.SRCCOPY);
+                    }
 
-                int w = Screen.PrimaryScreen.Bounds.Width;
-                int h = Screen.PrimaryScreen.Bounds.Height;
+                    for (int x = 0; x < w; x += 4)
+                    {
+                        int dy = (int)(Math.Cos(t + x * 0.09) * 40);
+                        BitBlt(hdc, x, dy, 4, h, hdc, x, 0, TernaryRasterOperations.SRCCOPY);
+                    }
 
-                // Random screen feedback shift
-                BitBlt(
-                    hdc,
-                    rnd.Next(-20, 20),
-                    rnd.Next(-20, 20),
-                    w,
-                    h,
-                    hdc,
-                    0,
-                    0,
-                    TernaryRasterOperations.SRCCOPY);
-
-                // Color inversion blocks
-                PatBlt(
-                    hdc,
-                    rnd.Next(w),
-                    rnd.Next(h),
-                    rnd.Next(50, 300),
-                    rnd.Next(50, 300),
-                    TernaryRasterOperations.PATPAINT);
-
-                // Random stretch distortion
-                StretchBlt(
-                    hdc,
-                    rnd.Next(-50, 50),
-                    rnd.Next(-50, 50),
-                    w + rnd.Next(-100, 100),
-                    h + rnd.Next(-100, 100),
-                    hdc,
-                    0,
-                    0,
-                    w,
-                    h,
-                    TernaryRasterOperations.SRCCOPY);
-
-                // Mirror strips
-                int y = rnd.Next(h);
-                int hh = rnd.Next(10, 80);
-
-                StretchBlt(
-                    hdc,
-                    0,
-                    y,
-                    w,
-                    hh,
-                    hdc,
-                    w,
-                    y,
-                    -w,
-                    hh,
-                    TernaryRasterOperations.SRCCOPY);
-
-                ReleaseDC(IntPtr.Zero, hdc);
-                Thread.Sleep(15);
+                    StretchBlt(hdc, -8, -8, w + 16, h + 16, hdc, 0, 0, w, h, TernaryRasterOperations.SRCCOPY);
+                    if (sw.ElapsedMilliseconds >= 30000)
+                    {
+                        break;
+                    }
+                    Thread.Sleep(1);
+                    ReleaseDC(IntPtr.Zero, hdc);
+                    gfx.Dispose();
+                }
             }
         }
         public void window_shake()
