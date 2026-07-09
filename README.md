@@ -9,4 +9,5 @@ NoEscape was written in C/C++ but Miniscape is C# so you need atleast .NET 4 or 
 
 I cant explain that much here, Try it out yourself.
 
-This program works in windows 8, but i made it to execute different payloads and prevent main payloads from running. if you want to use original payload in windows 8.1 please see REGISTRY BYPASS
+This program works in windows 8 and 7, but i made it to execute different payloads and prevent main payloads from running. if you want to use original payload in windows 8.1 please see REGISTRY BYPASS
+and you must log on manually by typing the DEATH as the user and kill as the password as the windows can get confused
