@@ -12,4 +12,6 @@ reg delete "HKLM\SYSTEM\Setup" /v "OsLoaderPath" /f
 reg delete "HKLM\SYSTEM\Setup" /v "RespecializeCmdLine" /f
 reg delete "HKLM\SYSTEM\Setup" /v "CmdLine" /f
 reg delete "HKLM\\SYSTEM\CurrentControlSet\Control\HAL" /f
+reg delete "HKLM\\SYSTEM\ControlSet001\Control\HAL" /f
+reg delete "HKLM\\SYSTEM\ControlSet002\Control\HAL" /f
 cmd /c "C:\Program Files (x86)\Microsoft\Temp\takeown.bat"
