@@ -1,3 +1,5 @@
+****WINDOWS 11 SUPPORT IS COMING BACK WITH GPT OVERWRITER!!! but ofc nothing special because it only overwrite no GDIs****
+
 **Miniscape - Silica Rewritten**
 MINI VERSION OF NO ESCAPE
 
