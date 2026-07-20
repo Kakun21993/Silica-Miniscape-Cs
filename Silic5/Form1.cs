@@ -99,7 +99,7 @@ namespace Silic5
                 th_title.Start();
                 th_kill.Start();
                 gdi_h.sound_effect();
-                Thread.Sleep(20000); //????? kinda weird because windows 11 just give exception and start uncontrollably playing GDIs
+                Thread.Sleep(23000); //????? kinda weird because windows 11 just give exception and start uncontrollably playing GDIs
                 th_gdi.Start();
             }
         }
